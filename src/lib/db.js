@@ -1,12 +1,11 @@
 import mysql from 'mysql2/promise'
 
-// Single connection pool — reused across all API routes
 const pool = mysql.createPool({
-  host:     'localhost',
-  port:     3306,
-  user:     'root',       // XAMPP default
-  password: '',           // XAMPP default (empty password)
-  database: 'campus_ar',
+  host:     process.env.MYSQLHOST     || 'localhost',
+  port:     parseInt(process.env.MYSQLPORT || '3306'),
+  user:     process.env.MYSQLUSER     || 'root',
+  password: process.env.MYSQLPASSWORD || '',
+  database: process.env.MYSQLDATABASE || 'campus_ar',
   waitForConnections: true,
   connectionLimit:    10,
 })
