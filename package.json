@@ -1,0 +1,17 @@
+{
+  "name": "campus-ar-admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "mysql2": "^3.22.0",
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18"
+  }
+}
