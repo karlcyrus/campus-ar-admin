@@ -1,8 +1,11 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Campus AR | Admin',
+  title: 'NAvSU AR | Admin',
   description: 'Campus AR Office-to-Node Management System',
+  icons: {
+    icon: '/favicon.png',
+  },
 }
 
 export default function RootLayout({ children }) {
