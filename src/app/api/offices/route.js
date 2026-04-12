@@ -2,11 +2,8 @@ import { NextResponse } from 'next/server'
 import pool from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
 
-// GET /api/offices
+// GET /api/offices — public, no auth required (read-only office data)
 export async function GET(request) {
-  if (!requireAuth(request))
-    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
-
   try {
     const [rows] = await pool.query(`
       SELECT
