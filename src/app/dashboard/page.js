@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import OfficeTable from '../components/OfficeTable'
 import EditModal from '../components/EditModal'
+import ConfirmDialog from '../components/ConfirmDialog'
 import Toast from '../components/Toast'
 
 export default function DashboardPage() {
@@ -13,6 +14,9 @@ export default function DashboardPage() {
   const [editingOffice, setEditing] = useState(null)
   const [toast, setToast]           = useState({ msg: '', visible: false })
   const [showDropdown, setShowDropdown] = useState(false)
+
+  // Confirmation dialog state
+  const [confirm, setConfirm] = useState(null) // { title, message, confirmLabel, confirmStyle, onConfirm }
 
   // Derived stats
   const totalOffices   = offices.length
@@ -44,8 +48,19 @@ export default function DashboardPage() {
 
   useEffect(() => { fetchOffices() }, [])
 
-  // Edit handler
-  const handleEdit = useCallback((office) => setEditing(office), [])
+  // Edit — show confirm first, then open modal
+  const handleEdit = useCallback((office) => {
+    setConfirm({
+      title: 'Edit Office Record',
+      message: `Are you sure you want to edit "${office.name}"? Changes will be marked as pending until published.`,
+      confirmLabel: 'Continue Editing',
+      confirmStyle: 'info',
+      onConfirm: () => {
+        setConfirm(null)
+        setEditing(office)
+      }
+    })
+  }, [])
 
   // Save — calls PUT /api/offices/[id]
   const handleSave = useCallback(async (updated) => {
@@ -72,20 +87,29 @@ export default function DashboardPage() {
     }
   }, [])
 
-  // Delete — calls DELETE /api/offices/[id]
-  const handleDelete = useCallback(async (id, name) => {
-    try {
-      const res  = await fetch(`/api/offices/${id}`, { method: 'DELETE' })
-      const json = await res.json()
-      if (json.success) {
-        showToast(`"${name}" removed.`)
-        fetchOffices()
-      } else {
-        showToast(json.error || 'Delete failed.')
+  // Delete — show confirm first, then execute
+  const handleDelete = useCallback((id, name) => {
+    setConfirm({
+      title: 'Delete Office Record',
+      message: `Are you sure you want to delete "${name}"? This action cannot be undone.`,
+      confirmLabel: 'Yes, Delete',
+      confirmStyle: 'danger',
+      onConfirm: async () => {
+        setConfirm(null)
+        try {
+          const res  = await fetch(`/api/offices/${id}`, { method: 'DELETE' })
+          const json = await res.json()
+          if (json.success) {
+            showToast(`"${name}" removed.`)
+            fetchOffices()
+          } else {
+            showToast(json.error || 'Delete failed.')
+          }
+        } catch {
+          showToast('Network error.')
+        }
       }
-    } catch {
-      showToast('Network error.')
-    }
+    })
   }, [])
 
   // Publish all — calls POST /api/offices
@@ -245,12 +269,24 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* MODAL */}
+      {/* EDIT MODAL */}
       {editingOffice && (
         <EditModal
           office={editingOffice}
           onClose={() => setEditing(null)}
           onSave={handleSave}
+        />
+      )}
+
+      {/* CONFIRM DIALOG */}
+      {confirm && (
+        <ConfirmDialog
+          title={confirm.title}
+          message={confirm.message}
+          confirmLabel={confirm.confirmLabel}
+          confirmStyle={confirm.confirmStyle}
+          onConfirm={confirm.onConfirm}
+          onCancel={() => setConfirm(null)}
         />
       )}
 

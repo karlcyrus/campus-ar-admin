@@ -845,3 +845,99 @@ tbody td { padding: 14px 20px; font-size: 13.5px; vertical-align: middle; }
   height: 15px;
   flex-shrink: 0;
 }
+
+/* ── CONFIRM DIALOG ── */
+.confirmDialog {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 400px;
+  padding: 32px 28px 24px;
+  text-align: center;
+  animation: slideUp .3s cubic-bezier(.22,1,.36,1) both;
+}
+
+.confirmIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.confirmIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.confirmIcon[data-style="danger"] {
+  background: var(--red-lt);
+  color: var(--red);
+}
+
+.confirmIcon[data-style="info"] {
+  background: var(--blue-lt);
+  color: var(--blue);
+}
+
+.confirmTitle {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -.2px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.confirmMessage {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.confirmActions .btnCancel {
+  flex: 1;
+}
+
+.btnConfirm {
+  flex: 1;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .14s;
+}
+
+.btnConfirmDanger {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(220,38,38,.3);
+}
+
+.btnConfirmDanger:hover {
+  background: #b91c1c;
+  box-shadow: 0 4px 12px rgba(220,38,38,.35);
+}
+
+.btnConfirmEdit {
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(29,78,216,.3);
+}
+
+.btnConfirmEdit:hover {
+  background: var(--blue-dk);
+  box-shadow: 0 4px 12px rgba(29,78,216,.35);
+}
