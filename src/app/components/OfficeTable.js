@@ -33,6 +33,7 @@ export default function OfficeTable({ offices, onEdit, onDelete }) {
         <table>
           <thead>
             <tr>
+              <th>Image</th>
               <th>Office Name</th>
               <th>Node Type</th>
               <th>Current Node</th>
@@ -43,7 +44,7 @@ export default function OfficeTable({ offices, onEdit, onDelete }) {
           <tbody>
             {filtered.length === 0 ? (
               <tr className="emptyRow">
-                <td colSpan={5}>No offices found.</td>
+                <td colSpan={6}>No offices found.</td>
               </tr>
             ) : (
               filtered.map(office => (
@@ -64,9 +65,29 @@ export default function OfficeTable({ offices, onEdit, onDelete }) {
 
 function OfficeRow({ office, onEdit, onDelete }) {
   const isLive = office.status === 'live'
+  const [imgError, setImgError] = useState(false)
 
   return (
     <tr>
+      <td>
+        <div className="tableThumbnail">
+          {office.image_url && !imgError ? (
+            <img
+              src={office.image_url}
+              alt={office.name}
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="thumbPlaceholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="M21 15l-5-5L5 21"/>
+              </svg>
+            </div>
+          )}
+        </div>
+      </td>
       <td className="cellName">{office.name}</td>
       <td className="cellBuilding">{office.node_type || '—'}</td>
       <td>

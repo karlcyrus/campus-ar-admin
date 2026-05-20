@@ -691,6 +691,83 @@ tbody td { padding: 14px 20px; font-size: 13.5px; vertical-align: middle; }
 
 .btnSave svg { width: 14px; height: 14px; }
 
+/* ── IMAGE PREVIEW (Modal) ── */
+.imageHint {
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.imagePreview {
+  margin-top: 12px;
+  border: 1.5px solid var(--paper-2);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 200px;
+}
+
+.imagePreview img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.imagePreviewError {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--red);
+  padding: 8px 12px;
+  background: var(--red-lt);
+  border-radius: 7px;
+}
+
+.imagePreviewError svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ── TABLE THUMBNAIL ── */
+.tableThumbnail {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1.5px solid var(--paper-2);
+  flex-shrink: 0;
+}
+
+.tableThumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  color: var(--ink-3);
+}
+
+.thumbPlaceholder svg {
+  width: 20px;
+  height: 20px;
+}
+
 /* ── TOAST ── */
 .toast {
   position: fixed;

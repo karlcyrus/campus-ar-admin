@@ -14,6 +14,7 @@ export async function GET(request) {
         om.status,
         om.is_active,
         om.updated_at,
+        om.image_url,
         n.node_type
       FROM office_mappings om
       JOIN nodes n ON om.node_id = n.node_id

@@ -56,6 +56,7 @@ export default function DashboardPage() {
         body:    JSON.stringify({
           node_id:      updated.node,
           display_name: updated.name,
+          image_url:    updated.image_url,
         }),
       })
       const json = await res.json()

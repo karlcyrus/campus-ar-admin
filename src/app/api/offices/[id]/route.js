@@ -11,7 +11,7 @@ export async function PUT(request, { params }) {
   const { id } = params
   try {
     const body = await request.json()
-    const { node_id, display_name } = body
+    const { node_id, display_name, image_url } = body
 
     if (!node_id)
       return NextResponse.json({ success: false, error: 'node_id is required.' }, { status: 400 })
@@ -33,9 +33,9 @@ export async function PUT(request, { params }) {
     await pool.query(`
       UPDATE office_mappings
       SET node_id = ?, display_name = COALESCE(?, display_name),
-          status = 'pending', updated_at = NOW(), updated_by = ?
+          image_url = ?, status = 'pending', updated_at = NOW(), updated_by = ?
       WHERE id = ? AND is_active = 1
-    `, [node_id, display_name || null, admin.id, id])
+    `, [node_id, display_name || null, image_url ?? null, admin.id, id])
 
     await pool.query(`
       INSERT INTO office_mapping_history
