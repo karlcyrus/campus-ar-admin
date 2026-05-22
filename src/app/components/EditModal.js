@@ -10,6 +10,29 @@ export default function EditModal({ office, onClose, onSave }) {
   const [loadingNodes, setLoadingNodes] = useState(true)
   const [imgError, setImgError]   = useState(false)
 
+  // Convert Google Drive sharing links to direct image URLs
+  function toDirectImageUrl(url) {
+    if (!url) return url
+    const trimmed = url.trim()
+
+    // Match: https://drive.google.com/file/d/FILE_ID/view...
+    const fileMatch = trimmed.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/)
+    if (fileMatch) return `https://drive.google.com/uc?export=view&id=${fileMatch[1]}`
+
+    // Match: https://drive.google.com/open?id=FILE_ID
+    const openMatch = trimmed.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/)
+    if (openMatch) return `https://drive.google.com/uc?export=view&id=${openMatch[1]}`
+
+    // Already a direct link or other URL — return as-is
+    return trimmed
+  }
+
+  function handleImageUrlChange(raw) {
+    const converted = toDirectImageUrl(raw)
+    setImageUrl(converted)
+    setImgError(false)
+  }
+
   // Fetch valid nodes from API
   useEffect(() => {
     async function fetchNodes() {
@@ -113,10 +136,10 @@ export default function EditModal({ office, onClose, onSave }) {
               className="modalInput"
               type="url"
               value={imageUrl}
-              placeholder="https://i.imgur.com/example.jpg"
-              onChange={e => { setImageUrl(e.target.value); setImgError(false) }}
+              placeholder="Paste image URL or Google Drive link"
+              onChange={e => handleImageUrlChange(e.target.value)}
             />
-            <p className="imageHint">Paste a direct image link (Imgur, Google Drive, etc.). Recommended: square, 300×300px+</p>
+            <p className="imageHint">Supports direct image links and Google Drive sharing links. Recommended: square, 300×300px+</p>
 
             {imageUrl.trim() && !imgError && (
               <div className="imagePreview">
