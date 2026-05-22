@@ -17,11 +17,15 @@ export default function EditModal({ office, onClose, onSave }) {
 
     // Match: https://drive.google.com/file/d/FILE_ID/view...
     const fileMatch = trimmed.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/)
-    if (fileMatch) return `https://drive.google.com/uc?export=view&id=${fileMatch[1]}`
+    if (fileMatch) return `https://lh3.googleusercontent.com/d/${fileMatch[1]}`
 
     // Match: https://drive.google.com/open?id=FILE_ID
     const openMatch = trimmed.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/)
-    if (openMatch) return `https://drive.google.com/uc?export=view&id=${openMatch[1]}`
+    if (openMatch) return `https://lh3.googleusercontent.com/d/${openMatch[1]}`
+
+    // Match: https://drive.google.com/uc?...id=FILE_ID (old format)
+    const ucMatch = trimmed.match(/drive\.google\.com\/uc\?.*id=([a-zA-Z0-9_-]+)/)
+    if (ucMatch) return `https://lh3.googleusercontent.com/d/${ucMatch[1]}`
 
     // Already a direct link or other URL — return as-is
     return trimmed
