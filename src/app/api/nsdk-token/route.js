@@ -1,13 +1,15 @@
 import { NextResponse } from 'next/server'
 
-// GET /api/nsdk-token — returns the NSDK access token to the Unity app
+// GET /api/nsdk-token — exchanges the Service Account API key
+// for a short-lived JWT access token via Niantic's Identity Service.
 //
-// The Service Account API key is stored as an environment variable on Railway.
-// The Unity app calls this endpoint on startup to retrieve it,
-// so the key is never baked into the APK.
+// Flow:
+//   1. Unity app calls this endpoint on startup
+//   2. This endpoint calls Niantic's Identity Service with the API key
+//   3. Niantic returns a JWT access token
+//   4. We forward the JWT to the Unity app
 //
-// If the key is ever compromised, just rotate it on the Niantic dashboard
-// and update the env variable on Railway — no APK rebuild needed.
+// The API key never leaves the server.
 
 export async function GET() {
   const apiKey = process.env.NSDK_API_KEY
@@ -20,8 +22,39 @@ export async function GET() {
     )
   }
 
-  return NextResponse.json({
-    success: true,
-    access_token: apiKey,
-  })
+  try {
+    // Exchange API key for JWT via Niantic Spatial Identity Service
+    const response = await fetch('https://spatial-identity.nianticspatial.com/oauth/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        grantType: 'exchange_api_key_access_token',
+        apiKey: apiKey,
+      }),
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error(`[GET /api/nsdk-token] Niantic token exchange failed (${response.status}): ${errorText}`)
+      return NextResponse.json(
+        { success: false, error: 'Token exchange failed.' },
+        { status: 502 }
+      )
+    }
+
+    const data = await response.json()
+
+    // Niantic returns: { accessToken: "JWT...", expiresAt: 1712345678 }
+    return NextResponse.json({
+      success: true,
+      access_token: data.accessToken,
+      expires_at: data.expiresAt,
+    })
+  } catch (err) {
+    console.error('[GET /api/nsdk-token] Error:', err)
+    return NextResponse.json(
+      { success: false, error: 'Internal server error.' },
+      { status: 500 }
+    )
+  }
 }
