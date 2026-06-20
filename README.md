@@ -268,7 +268,7 @@ Login Page                    Server                         Browser
 
 ## 👥 Authors
 
-- **Karl Cyrus S. Geron**
+- **Karl Cyrus Celda**
 - **Jhon Rhey G. Valleramos**
 - **Antonio Miguel V. Villafiania**
 
@@ -285,7 +285,3 @@ This project was developed as a capstone/thesis requirement. All rights reserved
 - **Mobile App (Unity):** [NAvSU-AugmentedRealityBasedNavigationSystem](https://github.com/karlcyrus/NAvSU-AugmentedRealityBasedNavigationSystem)
 
 ---
-
-<p align="center">
-  <sub>Built with 💙 using Next.js, React, and MySQL</sub>
-</p>
