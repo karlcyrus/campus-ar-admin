@@ -6,13 +6,13 @@
   <img src="https://img.shields.io/badge/bcrypt-Auth-FF6B6B?style=for-the-badge&logo=letsencrypt&logoColor=white" />
 </p>
 
-# 🖥️ Campus AR Admin — NAvSU Admin Dashboard
+#  Campus AR Admin — NAvSU Admin Dashboard
 
 The **Campus AR Admin Dashboard** is the server-side web application for the [NAvSU AR Navigation System](https://github.com/karlcyrus/NAvSU-AugmentedRealityBasedNavigationSystem). It provides a secure admin panel for managing campus office-to-node mappings, and exposes a **REST API** that the Unity mobile app consumes at runtime to dynamically load destination data and authenticate with Niantic's Lightship SDK.
 
 ---
 
-## ⚙️ How It Connects to the Unity App
+##  How It Connects to the Unity App
 
 The admin dashboard serves as the **backend bridge** between the admin's management interface and the AR mobile app running on the user's device.
 
@@ -50,20 +50,20 @@ The admin dashboard serves as the **backend bridge** between the admin's managem
 
 ## ✨ Features
 
-- 🔐 **Secure Authentication** — HMAC-SHA256 signed session tokens with bcrypt password hashing and 8-hour TTL.
-- 📋 **Office CRUD** — Create, read, update, and soft-delete campus offices with full audit history.
-- 🔗 **Node Assignment** — Map each office/building to a navigation graph node ID from the campus waypoint network.
-- 🖼️ **Image URLs** — Attach building/office images via URL for display in the mobile app.
-- 📊 **Dashboard Stats** — Real-time counters for total offices, live offices, pending changes, and active nodes.
-- 🔄 **Publish Workflow** — Changes are marked as `pending` until explicitly published to `live`, preventing accidental updates from reaching the mobile app.
-- 📜 **Audit History** — Every edit and delete is logged in `office_mapping_history` with old/new values, timestamps, and the admin who made the change.
-- 🔑 **Niantic NSDK Token Proxy** — Securely exchanges the Lightship API key for a short-lived JWT without exposing credentials to the client.
-- 🌐 **Public API** — `GET /api/offices` is unauthenticated (read-only) so the Unity app can fetch data without login credentials.
-- 🛡️ **Route Protection** — Middleware redirects unauthenticated users from `/dashboard` to `/login`.
+-  **Secure Authentication** — HMAC-SHA256 signed session tokens with bcrypt password hashing and 8-hour TTL.
+-  **Office CRUD** — Create, read, update, and soft-delete campus offices with full audit history.
+-  **Node Assignment** — Map each office/building to a navigation graph node ID from the campus waypoint network.
+-  **Image URLs** — Attach building/office images via URL for display in the mobile app.
+-  **Dashboard Stats** — Real-time counters for total offices, live offices, pending changes, and active nodes.
+-  **Publish Workflow** — Changes are marked as `pending` until explicitly published to `live`, preventing accidental updates from reaching the mobile app.
+-  **Audit History** — Every edit and delete is logged in `office_mapping_history` with old/new values, timestamps, and the admin who made the change.
+-  **Niantic NSDK Token Proxy** — Securely exchanges the Lightship API key for a short-lived JWT without exposing credentials to the client.
+-  **Public API** — `GET /api/offices` is unauthenticated (read-only) so the Unity app can fetch data without login credentials.
+-  **Route Protection** — Middleware redirects unauthenticated users from `/dashboard` to `/login`.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Component | Technology |
 |---|---|
@@ -77,7 +77,7 @@ The admin dashboard serves as the **backend bridge** between the admin's managem
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 campus-ar-admin/
@@ -116,7 +116,7 @@ campus-ar-admin/
 
 ---
 
-## 🔌 API Endpoints
+##  API Endpoints
 
 | Method | Endpoint | Auth | Description |
 |---|---|---|---|
@@ -149,7 +149,7 @@ campus-ar-admin/
 
 ---
 
-## 🗄️ Database Schema
+##  Database Schema
 
 ### `office_mappings`
 
@@ -196,7 +196,7 @@ campus-ar-admin/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -245,7 +245,7 @@ campus-ar-admin/
 
 ---
 
-## 🔐 Authentication Flow
+##  Authentication Flow
 
 ```
 Login Page                    Server                         Browser
@@ -266,7 +266,7 @@ Login Page                    Server                         Browser
 
 ---
 
-## 👥 Authors
+##  Authors
 
 - **Karl Cyrus Celda**
 - **Jhon Rhey G. Valleramos**
